@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <link href="https://vjs.zencdn.net/8.12.0/video-js.css" rel="stylesheet" />
+
+
+  </head>
+  <body>
+    <h1>Multimedia en HTML</h1>
+
+    <h2>Recurso Imagenes</h2>
+    <img
+      alt="gato feliz"
+      title="gato feliz"
+      src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTJl0tKgb3SlTy5DId-I6deUCILUta_WjANDA&s"
+      alt=""
+    />
+
+    <!-- Abbreviation	File Format	File Extension
+APNG	Animated Portable Network Graphics	.apng
+GIF	Graphics Interchange Format	.gif
+ICO	Microsoft Icon	.ico, .cur
+JPEG	Joint Photographic Expert Group image	.jpg, .jpeg, .jfif, .pjpeg, .pjp
+PNG	Portable Network Graphics	.png
+SVG	Scalable Vector Graphics	.svg -->
+
+    <!-- recomendable usar .webp -->
+
+    <hr />
+    <h2>Recurso Videos</h2>
+
+    <!-- <video
+      width="300px"
+      autoplay
+      controls
+      muted
+      src="https://cdn.pixabay.com/video/2024/06/14/216696_tiny.mp4"
+    ></video>
+    <video
+      width="400px"
+      autoplay
+      controls
+      muted
+      src="https://cdn.pixabay.com/video/2024/06/14/216696_tiny.mp4"
+    ></video> -->
+
+<!-- 
+    <video width="320" height="240" controls>
+      <source src="https://cdn.pixabay.com/video/2024/noexiste.mp4" type="video/mp4" />
+      <source src="https://cdn.pixabay.com/video/2024/06/14/216696_tiny.mp4" type="video/mp4" />
+      Your browser does not support the video tag.
+    </video> -->
+
+
+    <video
+    id="my-video"
+    class="video-js"
+    controls
+    preload="auto"
+    width="640"
+    height="264"
+    poster=""
+    data-setup="{}"
+  >
+    <source src="https://cdn.pixabay.com/video/2024/06/14/216696_tiny.mp4" type="video/mp4" />
+    <source src="MY_VIDEO.webm" type="video/webm" />
+    <p class="vjs-no-js">
+      To view this video please enable JavaScript, and consider upgrading to a
+      web browser that
+      <a href="https://videojs.com/html5-video-support/" target="_blank"
+        >supports HTML5 video</a
+      >
+    </p>
+  </video>
+
+
+
+
+  <hr />
+  <h2>Recurso Audio</h2>
+
+
+  <audio autoplay controls
+  src="https://cdn.pixabay.com/download/audio/2024/05/10/audio_65497ffcaa.mp3"></audio>
+
+  
+
+
+
+
+  
+    <script src="https://vjs.zencdn.net/8.12.0/video.min.js"></script>
+
+  </body>
+</html>
