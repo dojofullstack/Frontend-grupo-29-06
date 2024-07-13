@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <header>
+        <h1>Formularios en HTML</h1>
+    </header>
+
+
+    <main>
+
+
+        <h2>INiciar Sesion</h2>
+
+        <form action="https://webhook.site/cdc6f39a-21d5-438c-b5af-68dabcde4c1a"  method="post">
+
+            <fieldset>
+                <legend>Login</legend>
+                
+                <label for="correo"> Correo Elect: </label>
+                <input type="text" name="correo" id="correo" placeholder="ingresa tu email" >
+    
+    
+                <label for="contrasena"> Contrasena: </label>
+                <input type="password" name="contrasena" id="contrasena" placeholder="ingresa tu contrrasena">
+    
+            </fieldset>
+
+
+            <fieldset>
+                <legend>Codigo de Recpatcha (No soy un robot)</legend>
+                <input type="text" placeholder="Cuanto es 5*12?">
+            </fieldset>
+
+
+            <input type="submit" id="login" value="Iniciar Sesion">
+
+            <!-- <button>INiciar sesion</button> -->
+            
+        </form>
+
+
+        <hr>
+
+        <form method="post" action="https://enf8f6028vsim.x.pipedream.net">
+
+            <fieldset>
+                <legend>Mantenimiento de Auto</legend>
+                <input type="number" placeholder="Ingresa tu placa vehicular"  name="placa" id="placa">
+
+                <input type="text" name="titular" id="titular" placeholder="Titular?">
+
+
+                <label for="">Programa la Cita</label>
+                <input type="datetime-local" name="cita" id="cita">
+
+            </fieldset>
+
+
+            <input type="submit" value="Enviar solicitud">
+
+
+        </form>
+
+
+
+
+
+
+    </main>
+
+
+    <footer></footer>
+
+</body>
+</html>
