@@ -1,0 +1,28 @@
+
+form {
+    background-color: aquamarine;
+    border-radius: 33px;
+    width: 300px;
+}
+
+
+input {
+    border-radius: 20px;
+    font-size: 20px;
+    background-color: aquamarine;
+    border: 1px solid purple;
+}
+
+
+button {
+    background-color: purple;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    font-size: 20px;
+}
+
+
+h1 {
+    color: pink !important;
+}
