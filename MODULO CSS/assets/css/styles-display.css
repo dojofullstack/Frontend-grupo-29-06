@@ -1,0 +1,78 @@
+
+* {
+    font-family: "Playwrite CU", cursive;
+}
+
+
+#title-intro {
+    background-color: aqua;
+    display: inline;
+}
+
+
+#section-intro {
+    background-color: greenyellow;
+    display: inline;
+}
+
+#parrafo-intro {
+    background-color: cornflowerblue;
+    display: inline-block;
+}
+
+
+#catalogo {
+    border: 10px solid brown;
+    margin: 10px;
+    padding: 10px;
+}
+
+article {
+    border: 10px solid greenyellow;
+    width: 300px;
+    height: 500px;
+    text-align: center;
+    display: inline-block;
+    margin: 10px;
+    padding: 20px;
+}
+
+img {
+    width: 100%;
+}
+
+/* h3 {
+    text-align: center ;
+} */
+
+span {
+    display: block;
+    color: green;
+    font-size: 20px;
+}
+
+
+button {
+    background-color: purple;
+    color: white;
+    padding: 10px;
+}
+
+
+#btn-filtros {
+    width: 300px;
+    background-color: black;
+    color: yellow;
+    display: inline-block;
+    padding: 20px 50px;
+    margin: 20px;
+    /* border-left:  10px solid red; ; */
+    border: 10px solid red;
+    /* box-sizing: content-box; */
+    /* margin-left: 100px; */
+    /* margin: 50px; */
+    /* padding-left: 50px;
+    padding-right: 60px;
+    padding-top: 20px;
+    padding-bottom: 25px; */
+}
