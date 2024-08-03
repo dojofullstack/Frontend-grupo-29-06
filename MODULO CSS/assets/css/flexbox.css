@@ -1,0 +1,21 @@
+
+
+
+.contenedor-flex {
+    background-color: aqua;
+    height: 300px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 5px;
+    justify-content: center;
+    align-items: center;
+}
+
+.item {
+    background-color: purple;
+    padding: 5px;
+    color: white;
+    width: 50px;
+    height: 50px;
+}

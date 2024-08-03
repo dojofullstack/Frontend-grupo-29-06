@@ -1,0 +1,98 @@
+
+
+.btn-buy, .login, .btn {
+    padding: 5px 10px;
+    border: none;
+    background: purple;
+    font-size: 20px;
+    color: white;
+}
+
+.btn-buy:hover {
+    background-color: aqua;
+    transform: scale(1.5);
+}
+
+.p-main:hover {
+    background-color: yellow;
+    font-size: 20px;
+}
+
+
+.search, .search-2 {
+    padding: 5px;
+    font-size: 18px;
+    border-radius: 10px;
+    border: none;
+    box-shadow: 3px 3px 6px 0px purple;
+}
+
+
+.search:focus {
+    color: limegreen;
+    font-size: 20px;
+    font-style: italic;
+    background-color: lemonchiffon;
+    padding: 10px;
+}
+
+.comentario {
+    margin-top: 20px;
+    display: block;
+    padding: 5px;
+    font-size: 18px;
+    border-radius: 10px;
+    border: none;
+    box-shadow: 3px 3px 6px 0px gray;
+}
+
+
+.comentario:focus {
+    font-style: italic;
+    color: brown;
+    background-color: lightblue;
+    padding: 10px;
+}
+
+.add-cart {
+    margin-top: 50px;
+}
+.add-cart:focus {
+    zoom: 1.3;
+    background-color: orange;
+}
+
+
+
+.login:active {
+    background-color: yellow;
+    color: black;
+}
+
+
+.search-2:active {
+    background-color: blue;
+}
+
+
+.container {
+    border: 5px solid orange;
+    margin: 10px;
+}
+
+
+.btn:first-child {
+    background-color: aqua;
+}
+
+.btn:last-child {
+    background-color: greenyellow;
+}
+
+.btn:nth-child(3) {
+    background-color: brown;
+}
+
+.btn:nth-child(5) {
+    background-color: black;
+}
