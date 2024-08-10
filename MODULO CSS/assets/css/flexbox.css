@@ -1,4 +1,8 @@
-
+:root {
+    --color-favorito: purple;
+    --title-dojo-size: 23.5px;
+    --primary: blue;
+}
 
 
 .contenedor-flex {
@@ -13,9 +17,10 @@
 }
 
 .item {
-    background-color: purple;
+    background-color: var(--primary);
     padding: 5px;
     color: white;
     width: 50px;
     height: 50px;
+    font-size: var(--title-dojo-size);
 }

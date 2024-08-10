@@ -1,0 +1,90 @@
+
+
+
+.banner {
+    background-image: url(https://c.static-nike.com/a/images/f_auto,cs_srgb/w_1920,c_limit/tpqid8vgfey6m4ke86te/nike-joyride.jpg);
+    width: 100%;
+    height: 400px;
+    background-size: cover;
+}
+
+
+@media (max-width: 500px) {
+    /* hoja alternativa CSS */
+
+    .banner {
+        background-image: url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTdVnS96qz6O49ekZx_QIM4eVIhamafmz8qMw&s);
+    }
+
+
+    .cart {
+        background-color: brown;
+        padding: 10px 20px;
+        border: none;
+    }
+}
+
+
+@media (min-width: 500px){
+
+    .banner {
+        background-image: url(https://realsportantofagasta.cl/wp-content/uploads/2020/05/nike-banner-futbol.jpg);
+    }
+
+    .cart {
+        background-color: green;
+        padding: 10px 20px;
+        border: none;
+        font-size: 20px;
+    }
+}
+
+
+
+
+@media (min-width: 481px) and (max-width: 768px) {
+
+    /* hoja alternativa CSS */
+
+
+    .banner {
+        background-image: url(https://www.futbolemotion.com/imagescontenidos/lanzamientos/nike-luminous/banner.jpg);
+    }
+
+    .cart {
+        background-color: beige;
+        padding: 10px 20px;
+        border: none;
+        font-size: 20px;
+    }
+
+    
+}
+
+
+.flex {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    border: 5px solid purple;
+    gap: 5px;
+}
+
+.item {
+    background-color: var(--primary);
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    font-size: var(--title-dojo-size);
+}
+
+
+@media (min-width: 481px) and (max-width: 768px) {
+
+    .flex {
+        flex-direction: column;
+        flex-wrap: nowrap;
+        border: 3px solid orange;
+    }
+
+}
