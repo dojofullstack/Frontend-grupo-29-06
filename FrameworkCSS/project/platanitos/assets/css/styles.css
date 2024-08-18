@@ -1,0 +1,19 @@
+.fs-small {
+    font-size: 12px;
+}
+
+
+.sublist-custom {
+    left: 120px;
+    top: 50px;
+}
+
+
+#more-options {
+    width: 800px !important;
+    display: none;
+}
+
+.carousel-item img {
+    height: 45vh;
+}
