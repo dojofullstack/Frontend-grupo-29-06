@@ -42,3 +42,30 @@ const salidaMaqina = maquinaNaranjas(10, false);
 // const salidaMaqina = maquinaNaranjas(10, false, hiHenry);
 
 console.log(salidaMaqina);
+
+
+
+// tipos de funciones
+
+// por expresion
+
+const helloApiTodoList = function (){
+    console.log("execute function");
+    return "hello world test api"
+}
+
+
+console.log(helloApiTodoList());
+
+
+// Arrow Function
+const apiDevTesting = (dias_expirar) => {
+    const timestampt = new Date();
+    console.log(timestampt);
+    console.log(timestampt.getTime());
+    return `api webhook live ${timestampt} expira en ${dias_expirar}`
+}
+
+
+
+console.log( apiDevTesting(30));
