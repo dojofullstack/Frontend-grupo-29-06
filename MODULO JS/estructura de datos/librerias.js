@@ -136,3 +136,9 @@ const data = [
 // }).then((respuesta) => {
 //     console.log(respuesta.data);
 // })
+
+
+
+
+// JSON.stringify()   Obj JS -> Json Text PLain
+// JSON.parse()       Json  -> Obj JS
