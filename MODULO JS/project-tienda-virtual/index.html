@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
     <head>
-        <title>Title</title>
+        <title>Tienda Virtual</title>
         <!-- Required meta tags -->
         <meta charset="utf-8" />
         <meta
@@ -16,6 +16,8 @@
             integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
             crossorigin="anonymous"
         />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
     </head>
 
     <body>
@@ -75,15 +77,17 @@
                         </ul>
                         <form class="d-flex my-2 my-lg-0">
                             <input
-                                class="form-control me-sm-2"
+                                id="input-search"
+                                class="form-control me-sm-2 p-3"
                                 type="text"
-                                placeholder="Search"
+                                placeholder="Buscar productos"
                             />
                             <button
                                 class="btn btn-outline-success my-2 my-sm-0"
-                                type="submit"
+                                type="button"
+                                onclick="buscarProduct()"
                             >
-                                Search
+                                Buscar
                             </button>
                         </form>
                     </div>
@@ -215,6 +219,125 @@
 
 
 
+        <!-- Modal Body  UPDATED-->
+                    <!-- if you want to close by clicking outside the modal, delete the last endpoint:data-bs-backdrop and data-bs-keyboard -->
+                    <div
+                        class="modal fade"
+                        id="modalIdUpdate"
+                        tabindex="-1"
+                        data-bs-backdrop="static"
+                        data-bs-keyboard="false"
+                        
+                        role="dialog"
+                        aria-labelledby="modalTitleId"
+                        aria-hidden="true"
+                    >
+                        <div
+                            class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-md"
+                            role="document"
+                        >
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="modalTitleId">
+                                       Actualizar producto
+                                    </h5>
+                                    <button
+                                        type="button"
+                                        class="btn-close"
+                                        data-bs-dismiss="modal"
+                                        aria-label="Close"
+                                    ></button>
+                                </div>
+                                <div class="modal-body">
+
+
+                                    <form action="#" id="form_update_product">
+
+                                        <!-- input oncluto para referencia el productId a actualizar -->
+                                        <input
+                                        type="hidden"
+                                        class="form-control"
+                                        name=""
+                                        id="product_id"
+                                        value=""
+                                        aria-describedby="helpId"
+                                        placeholder=""
+                                    />
+
+
+                                        <div class="mb-3">
+                                            <label for="" class="form-label">Titulo del producto:</label>
+                                            <input
+                                                type="text"
+                                                class="form-control"
+                                                name=""
+                                                id="product_title_update"
+                                                aria-describedby="helpId"
+                                                placeholder=""
+                                            />
+                                            <small id="helpId" class="form-text text-muted">Help text</small>
+                                        </div>
+                                    
+                                        <div class="mb-3">
+                                            <label for="" class="form-label">Imagen del producto:</label>
+                                            <input
+                                                type="text"
+                                                class="form-control"
+                                                name=""
+                                                id="product_image_update"
+                                                aria-describedby="helpId"
+                                                placeholder=""
+                                            />
+                                            <small id="helpId" class="form-text text-muted">Help text</small>
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label for="" class="form-label">Precio del producto:</label>
+                                            <input
+                                                type="number"
+                                                class="form-control"
+                                                name=""
+                                                id="product_price_update"
+                                                aria-describedby="helpId"
+                                                placeholder=""
+                                            />
+                                            <small id="helpId" class="form-text text-muted">Help text</small>
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label for="" class="form-label">Descripcion:</label>
+                                            <textarea class="form-control" name="" id="product_info_update" rows="3"></textarea>
+                                            <small id="helpId" class="form-text text-muted">Help text</small>
+                                        </div>
+
+
+                                    </form>
+
+                                    
+
+                                </div>
+                                <div class="modal-footer">
+                                    <button
+                                        type="button"
+                                        class="btn btn-secondary"
+                                        data-bs-dismiss="modal"
+                                    >
+                                        Cerrar
+                                    </button>
+
+
+                                    <button type="button" class="btn btn-primary" onclick="updateProductModal()">
+                                        Actualizar
+                                    </button>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+
+
+
                     <div class="row gap-3" id="catalogo-productos">
 
                     </div>
@@ -231,6 +354,9 @@
             <!-- place footer here -->
         </footer>
         <!-- Bootstrap JavaScript Libraries -->
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/uuid/8.3.2/uuid.min.js"></script>
+
         <script
             src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
             integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
@@ -251,6 +377,9 @@
     <script>
         const myModalProduct = new bootstrap.Modal(
             document.getElementById("modalId")
+        );
+        const myModalProductUpdate = new bootstrap.Modal(
+            document.getElementById("modalIdUpdate")
         );
 
         

@@ -12,7 +12,49 @@ const clearForm = () => {
     myform.reset();
 
     myModalProduct.hide();
-    myModalProduct.hide();
+
+}
+
+
+const clearFormUpdated = () => {
+
+    const myform = document.querySelector("#form_update_product");
+    myform.reset();
+
+    myModalProductUpdate.hide();
+
+}
+
+
+const saveProduct = () => {
+
+    const data = CATALOGO_PRODUCTOS.filter((item) => item !== null );
+
+    localStorage.setItem("catalogo",  JSON.stringify(data) );
+
+}
+
+
+const loadedProduct = () => {
+
+    const catalogo = localStorage.getItem("catalogo");
+
+    if (catalogo !== null){
+
+        console.log("caragando productos..");
+
+        JSON.parse(catalogo).forEach(element => {
+            // element.id = uuid.v4();
+            if (element !== null){
+                CATALOGO_PRODUCTOS.push(element);
+            }
+        });
+
+        // mostrar productos caragados
+        showProductFront(CATALOGO_PRODUCTOS);
+        // saveProduct();
+
+    }
 
 }
 
@@ -27,6 +69,7 @@ const crearProducto = () => {
 
 
     const product = {
+        id: uuid.v4(),
         product_title: product_title,
         product_price: product_price,
         product_info: product_info,
@@ -44,6 +87,8 @@ const crearProducto = () => {
 
     showProductFront(CATALOGO_PRODUCTOS);
 
+    saveProduct();
+
 }
 
 
@@ -58,7 +103,14 @@ const showProductFront = (products) => {
     <h5 class="card-title">${item.product_title}</h5>
     <p class="card-text">$ ${item.product_price}  USD</p>
         
-    <a href="#" class="btn btn-primary">Ver detalles</a>
+    <a href="#" class="btn btn-primary">Ver</a>
+
+    <i  onclick="deleteProduct('${item.id}')" class="bi bi-trash-fill fs-3 text-danger mx-2 btn"></i>
+
+
+    <i  onclick="modalUpdateProduct('${item.id}')" class="bi bi-pencil-square fs-3 text-primary mx-2 btn"></i>
+
+    
   </div>
 </div>
         `
@@ -160,3 +212,132 @@ function saveData(){
 
 // // Ejemplo de uso:
 // setCookie('miCookie', '129091029102102', 30);
+
+
+
+
+const buscarProduct = () => {
+
+    const inputSearch = document.querySelector("#input-search").value.toLowerCase();
+
+    // console.log("buscando, ", inputSearch);
+
+    const salidaBusqueda = CATALOGO_PRODUCTOS.filter( (item) => {
+
+        if (item.product_title.toLowerCase().includes(inputSearch) ){
+            return true
+        }
+
+    } )
+
+
+    console.log(salidaBusqueda);
+
+    showProductFront(salidaBusqueda);
+
+
+}
+
+
+
+
+const deleteProduct = (product_id) => {
+    
+    console.log("elimiando item", product_id);
+    // const salida =  CATALOGO_PRODUCTOS.filter( (item)  =>  item.id !==  product_id  );
+    // console.log(salida);
+
+    CATALOGO_PRODUCTOS.forEach((item, index) => {
+
+        if ( item.id ===  product_id){
+            delete CATALOGO_PRODUCTOS[index];
+        }
+    })
+
+
+    showProductFront(CATALOGO_PRODUCTOS);
+    saveProduct();
+
+
+}
+
+
+
+const updateProductModal = () => {
+
+    const product_id =  document.querySelector("#product_id").value;
+    const product_title_update =  document.querySelector("#product_title_update").value;
+    const product_image_update =  document.querySelector("#product_image_update").value;
+    const product_price_update =  document.querySelector("#product_price_update").value;
+    const product_info_update =  document.querySelector("#product_info_update").value;
+
+
+    const product = {
+        id: product_id,
+        product_title: product_title_update,
+        product_price: product_price_update,
+        product_info: product_info_update,
+        product_image: product_image_update,
+    }
+    
+    updateProduct(product_id, product);
+
+}
+
+
+const updateProduct = (product_id, productUpdated) => {
+
+    console.log("actualizando item", product_id);
+
+
+    CATALOGO_PRODUCTOS.forEach((item, index) => {
+        if ( item.id ===  product_id){
+            CATALOGO_PRODUCTOS[index] = productUpdated;
+        }
+    })
+
+
+    // puedes optimiza el codigo con la funcion finIndex para solo recupera la posicion
+    // const index = CATALOGO_PRODUCTOS.findIndex(item => item.id === product_id);
+    // console.log("index", index);
+    // CATALOGO_PRODUCTOS[index] = productUpdated;
+
+    showProductFront(CATALOGO_PRODUCTOS);
+    saveProduct();
+    clearFormUpdated();
+
+}
+
+
+
+
+const modalUpdateProduct = (product_id) => {
+
+    const producto = CATALOGO_PRODUCTOS.find( (item)  =>   item.id === product_id);
+
+    console.log("producto match", producto);
+
+
+    myModalProductUpdate.show();
+
+    document.querySelector("#product_id").value = product_id;
+    document.querySelector("#product_title_update").value = producto.product_title;
+    document.querySelector("#product_image_update").value = producto.product_image;
+    document.querySelector("#product_price_update").value = producto.product_price;
+    document.querySelector("#product_info_update").value = producto.product_info;
+
+
+}
+
+
+const initComponent = () => {
+
+    loadedProduct();
+
+}
+
+
+
+initComponent();
+
+
