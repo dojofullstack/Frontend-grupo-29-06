@@ -2,6 +2,13 @@
 
 console.log("module tienda virtual loaded");
 
+const API_AUTH = 'https://dummyjson.com/auth/login';
+const API_REGISTER = 'https://dummyjson.com/auth/register';
+const API_USER_ME = 'https://dummyjson.com/auth/me';
+const API_RESET_PASSWORDW = "";
+const API_PRODUCT = "";
+
+
 
 const CATALOGO_PRODUCTOS = [];
 
@@ -330,7 +337,151 @@ const modalUpdateProduct = (product_id) => {
 }
 
 
+
+const procesarLogin = (event) => {
+    // suspender la redireccion del form
+    event.preventDefault();
+
+    console.log("procesando credenciales...");
+    const emailInput = document.querySelector("#emailInput").value;
+    const passwordInput = document.querySelector("#PasswordInput").value;
+
+    console.log(emailInput, passwordInput);
+
+    const crendential = {
+        username: emailInput,
+        password: passwordInput
+    }
+
+    axios.post(API_AUTH, crendential).then((res) => {
+        console.log(res.data);
+        toastBootstrap2.show();
+
+        const accessToken = res.data.accessToken;
+        const refreshToken = res.data.refreshToken;
+
+        console.log(accessToken);
+
+        localStorage.setItem("user", JSON.stringify(res.data) );
+        document.cookie = `accessToken=${accessToken}; path=/`;
+
+        localStorage.setItem("refreshToken", refreshToken);
+
+
+        if (accessToken !== null){
+            location.href = "/project-tienda-virtual/index.html";
+        }
+
+
+    }).catch(err => {
+        console.log("error en la consulta", err.response.data.message);
+        toastBootstrap1.show();
+    })
+    
+
+
+}
+
+
+const refreshTokenCallback = () => {
+
+    const refreshToken = localStorage.getItem("refreshToken");
+
+    fetch('https://dummyjson.com/auth/refresh', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          refreshToken: refreshToken, // Optional, if not provided, the server will use the cookie
+          expiresInMins: 30, // optional (FOR ACCESS TOKEN), defaults to 60 
+        }),
+        credentials: 'include' // Include cookies (e.g., accessToken) in the request
+      })
+      .then(res => res.json())
+      .then((data) => {
+        console.log(data);
+        // nuevamente obtiens el accessToken
+        // localStorage.setItem("accessToken", "data.accessToken");
+        // localStorage.setItem("refreshToken", "data.refreshToken");
+      }).catch(error => {
+        closeLogin();
+      });
+}
+
+const loadProfile = () => {
+    let accessToken;
+    document.querySelector("#section_profile").style.display = "none";
+
+    // buscando y guardadno cookie 
+    document.cookie.split(";").forEach((item) => {
+        if(item.trim().includes("accessToken")){
+            console.log("la cookie accesTk esta disponible");
+            accessToken = item.trim().split("=")[1];
+        }
+    })
+
+
+    // console.log(accessToken);
+
+    if (!accessToken){
+        closeLogin();
+        return
+        // CERRAR SESION
+    }
+    
+    const dataJWT = jwtDecode(accessToken);
+
+    const timeActual = new Date();
+    const timeActualSecond = timeActual.getTime() / 1000;
+    
+
+    if (dataJWT.exp < timeActualSecond ){
+        console.log("ha expirado el token");
+
+        // checar la renovacion del token con el token "refreshToken"
+        refreshTokenCallback();
+        // closeLogin();
+        // CERRAR SESION
+        return;
+    }
+
+
+    console.log("el token esta vivo");
+    // cargar sesion del usuario
+
+    axios.get(API_USER_ME, {
+        headers: {
+            'Authorization': `Bearer ${accessToken}`, // Pass JWT via Authorization header
+          },
+    }).then( res => {
+        const profile = res.data;
+        localStorage.setItem("user", JSON.stringify(profile) );
+        document.querySelector("#section_profile").style.display = "block";
+
+        document.querySelector("#profile_user_name").innerHTML = profile.firstName;
+
+
+    })
+
+
+}
+
+
+
+
+
+const closeLogin = () => {
+    localStorage.removeItem("user");
+    const dataNow = new Date;
+    console.log(dataNow.toUTCString());
+    document.cookie = `accessToken=; expires=${dataNow.toUTCString()}; path=/`;
+    location.href = "/project-tienda-virtual/login.html";
+}
+
+
+
 const initComponent = () => {
+
+    loadProfile();
 
     loadedProduct();
 
@@ -338,6 +489,6 @@ const initComponent = () => {
 
 
 
-initComponent();
+
 
 
