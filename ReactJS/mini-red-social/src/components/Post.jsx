@@ -1,10 +1,11 @@
 import axios from "axios";
 import moment from "moment/moment";
 import { useEffect, useState } from "react";
+import { FaTrashAlt } from "react-icons/fa";
 
 const API_POST = "https://api.dojofullstack.com";
 
-const CreatePost = ({getListPost}) => {
+const CreatePost = ({ getListPost }) => {
   const [publicacion, setPublicacion] = useState("");
 
   const [loadingPost, setLoadingPost] = useState(false);
@@ -27,7 +28,6 @@ const CreatePost = ({getListPost}) => {
         setLoadingPost(false);
         setPublicacion("");
         getListPost();
-
       })
       .catch((error) => {
         console.log(error);
@@ -75,17 +75,14 @@ const CreatePost = ({getListPost}) => {
   );
 };
 
-const ListPost = ({ post, getListPost }) => {
 
+const ListPost = ({ post, getListPost, loadingPost, setLoadingPost }) => {
   const [publicacionEdit, setPublicacionEdit] = useState("");
-
   const [publicacionIdEdit, setPublicacionIdEdit] = useState(null);
 
-  
-
   const updatePostApi = (idPost) => {
-
     console.log("actualizado publicacion...");
+    setLoadingPost(true);
 
     const data = {
       title: publicacionEdit,
@@ -101,25 +98,45 @@ const ListPost = ({ post, getListPost }) => {
         setPublicacionIdEdit(null);
         setPublicacionEdit("");
         getListPost();
-        // setLoadingPost(false);
+        setLoadingPost(false);
       })
       .catch((error) => {
         console.log(error);
         setPublicacionIdEdit(null);
         setPublicacionEdit("");
-        // setLoadingPost(false);
+        setLoadingPost(false);
       });
+  };
 
+
+  const removePost = (idPost) => {
+
+    console.log("elimiando publicacion...");
+    setLoadingPost(true);
+
+    axios
+      .delete(`${API_POST}/api-demo/v1/publication/${idPost}`)
+      .then((response) => {
+        console.log(response.data);
+        getListPost();
+        setLoadingPost(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        setLoadingPost(false);
+      });
 
   }
 
 
 
   return (
-    <>
+    <div className={`${loadingPost ? "skeleton": ""}`}>
       {post?.map((item, index) => (
-        <div className="card bg-info text-dark w-full my-2 flex-row items-center p-3" key={index} >
-          
+        <div
+          className={"card bg-info text-dark w-full my-2 flex-row items-center p-3 " + `${loadingPost ? "skeleton": ""}`}
+          key={index}
+        >
           <div className="avatar online block">
             <div className="w-24 rounded-full">
               <img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
@@ -127,60 +144,71 @@ const ListPost = ({ post, getListPost }) => {
           </div>
 
           <div className="card-body">
-
-            
-      {
-          publicacionIdEdit ===  item.id ? 
-            <textarea
-            className="textarea textarea-accent w-full text-lg"
-            value={publicacionEdit}
-            onChange={(e) => setPublicacionEdit(e.target.value)}>
-            </textarea> :
-          <p className="text-lg py-3 font-bold"> {item.content}</p>
-        }
+            {publicacionIdEdit === item.id ? (
+              <textarea
+                className="textarea textarea-accent w-full text-lg"
+                value={publicacionEdit}
+                onChange={(e) => setPublicacionEdit(e.target.value)}
+              ></textarea>
+            ) : (
+              <p className="text-lg py-3 font-bold"> {item.content}</p>
+            )}
 
             <div className="card-actions justify-between">
-              <span className="text-sm"> {moment(item.created).format('MMMM Do YYYY, h:mm:ss a')}  </span>
+              <span className="text-sm">
+                {" "}
+                {moment(item.created).format("MMMM Do YYYY, h:mm:ss a")}{" "}
+              </span>
 
-     {
-        publicacionIdEdit ===  item.id ?
-               <button className="btn btn-sm" onClick={()  => {
-                    console.log("callback api update");
-                    updatePostApi(item.id);
-                    
-              } }>
-                Guardar
-              </button> :
-          <button className="btn btn-sm" onClick={()  => {
-            setPublicacionIdEdit(item.id);
-            setPublicacionEdit(item.content);
-            } }>
-            Editar
-          </button>
-}
+              <div>
+                {publicacionIdEdit === item.id ? (
+                  <button
+                    className="btn btn-sm"
+                    onClick={() => {
+                      console.log("callback api update");
+                      updatePostApi(item.id);
+                    }}
+                  >
+                    Guardar
+                  </button>
+                ) : (
+                  <button
+                    className="btn btn-sm"
+                    onClick={() => {
+                      setPublicacionIdEdit(item.id);
+                      setPublicacionEdit(item.content);
+                    }}
+                  >
+                    Editar
+                  </button>
+                )}
 
+                <button className="btn btn-sm mx-3" onClick={() => removePost(item.id)} >
+                  <FaTrashAlt className="text-error" />
+                </button>
 
-
-              
-
+              </div>
             </div>
           </div>
         </div>
       ))}
-    </>
+    </div>
   );
 };
 
 
-
-
 const Post = () => {
   const [post, setPost] = useState([]);
+  const [loadingPost, setLoadingPost] = useState(false);
+
+
 
   const getListPost = () => {
+    setLoadingPost(true);
     axios.get(`${API_POST}/api-demo/v1/publication/`).then((response) => {
       console.log(response.data);
       setPost(response.data.reverse());
+      setLoadingPost(false);
     });
   };
 
@@ -189,9 +217,9 @@ const Post = () => {
   return (
     <>
       <div className="flex flex-col w-full">
-        <CreatePost  getListPost={getListPost}/>
+        <CreatePost getListPost={getListPost} loadingPost={loadingPost}  />
 
-        <ListPost post={post} getListPost={getListPost}  />
+        <ListPost post={post} loadingPost={loadingPost}  setLoadingPost={setLoadingPost}  getListPost={getListPost} />
       </div>
     </>
   );
