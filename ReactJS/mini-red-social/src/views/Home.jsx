@@ -1,9 +1,11 @@
+import { useContext, useState } from "react";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import Post from "../components/Post";
 import { AiFillMessage } from "react-icons/ai";
 import { FaHome } from "react-icons/fa";
 import { MdNotifications } from "react-icons/md";
+import { ThemeContext } from "../Context";
 
 const Menu = () => {
   return (
@@ -37,11 +39,24 @@ const Menu = () => {
 
 
 const Home = () => {
+
+  const {theme, changeTheme} = useContext(ThemeContext);
+
+  const [color, setColor] = useState("");
+
+  // console.log(theme);
+  
+
   return (
     <>
       <Header />
 
-      <div className="container flex gap-10 w-full">
+      <input className="input" type="text" placeholder="Color del tema"  value={color} onChange={(e) => setColor(e.target.value)} />
+      <button className="btn btn-primary" onClick={() => changeTheme(color)  }>
+        Cambiar Tema
+      </button>
+
+      <div className="container flex gap-10 w-full" style={ {backgroundColor: theme } } >
         <Menu />
 
         <Post />

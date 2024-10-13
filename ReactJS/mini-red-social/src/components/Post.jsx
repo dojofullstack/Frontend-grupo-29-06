@@ -2,6 +2,7 @@ import axios from "axios";
 import moment from "moment/moment";
 import { useEffect, useState } from "react";
 import { FaTrashAlt } from "react-icons/fa";
+import useStore from "../useStore";
 
 const API_POST = "https://api.dojofullstack.com";
 
@@ -76,9 +77,16 @@ const CreatePost = ({ getListPost }) => {
 };
 
 
-const ListPost = ({ post, getListPost, loadingPost, setLoadingPost }) => {
+const ListPost = ({ getListPost, loadingPost, setLoadingPost }) => {
+
+  const post = useStore((state) => state.post);
+
+
   const [publicacionEdit, setPublicacionEdit] = useState("");
   const [publicacionIdEdit, setPublicacionIdEdit] = useState(null);
+
+  console.log("post", post);
+  
 
   const updatePostApi = (idPost) => {
     console.log("actualizado publicacion...");
@@ -198,16 +206,16 @@ const ListPost = ({ post, getListPost, loadingPost, setLoadingPost }) => {
 
 
 const Post = () => {
+
   const [post, setPost] = useState([]);
   const [loadingPost, setLoadingPost] = useState(false);
-
 
 
   const getListPost = () => {
     setLoadingPost(true);
     axios.get(`${API_POST}/api-demo/v1/publication/`).then((response) => {
-      console.log(response.data);
-      setPost(response.data.reverse());
+      // console.log(response.data.results);
+      setPost(response.data.results);
       setLoadingPost(false);
     });
   };
