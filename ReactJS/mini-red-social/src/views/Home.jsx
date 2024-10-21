@@ -1,4 +1,6 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import Post from "../components/Post";
@@ -6,6 +8,7 @@ import { AiFillMessage } from "react-icons/ai";
 import { FaHome } from "react-icons/fa";
 import { MdNotifications } from "react-icons/md";
 import { ThemeContext } from "../Context";
+import useStore from "../useStore";
 
 const Menu = () => {
   return (
@@ -40,11 +43,32 @@ const Menu = () => {
 
 const Home = () => {
 
+  const navigate = useNavigate();
+
   const {theme, changeTheme} = useContext(ThemeContext);
 
   const [color, setColor] = useState("");
 
-  // console.log(theme);
+
+  const getProfileInfo = useStore((state) => state.getProfileInfo);
+  const isLogin = useStore((state) => state.isLogin);
+  const user = useStore((state) => state.user);
+
+  // console.log(getProfileInfo);
+  // console.log(isLogin);
+  // console.log(user);
+
+
+  useEffect(() => {
+
+    if (isLogin){
+      getProfileInfo();
+    } else {
+      navigate("/login");
+    }
+
+  }, isLogin)
+
   
 
   return (

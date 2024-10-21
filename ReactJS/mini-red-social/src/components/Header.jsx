@@ -1,6 +1,7 @@
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useStore from "../useStore";
+import { useNavigate } from "react-router-dom";
 
 
 
@@ -10,14 +11,23 @@ const API_POST = "https://api.dojofullstack.com/api-demo/v1/publication/";
 
 const Header = () => {
 
+  const navigate = useNavigate();
+
   const themeNew = useStore((state) => state.themeNew);
   const changeThemeNew = useStore((state) => state.changeThemeNew);
 
   const post = useStore((state) => state.post);
   const updatePost = useStore((state) => state.updatePost);
 
+  const isLogin = useStore((state) => state.isLogin);
+  const user = useStore((state) => state.user);
+  const getProfileInfo = useStore((state) => state.getProfileInfo);
+  const closeLogin = useStore((state) => state.closeLogin);
 
-  console.log(post);
+
+
+  console.log(isLogin);
+  console.log(user);
   // console.log(changeThemeNew);
   
   
@@ -34,6 +44,23 @@ const Header = () => {
 
     })
   }
+
+
+  useEffect(() => {
+    getProfileInfo();
+  }, [])
+
+
+
+  useEffect(() => {
+
+    if (!isLogin){
+      navigate("/login")
+    }
+
+  }, [isLogin])
+
+
 
 
   return (
@@ -66,6 +93,9 @@ const Header = () => {
                 } }
               />
             </div>
+
+            
+            {isLogin && user &&
             <div className="dropdown dropdown-end">
               <div
                 tabIndex={0}
@@ -85,18 +115,21 @@ const Header = () => {
               >
                 <li>
                   <a className="justify-between">
-                    Profile
-                    <span className="badge">New</span>
+                    Perfil
+                    <span className="badge">{user.username}</span>
                   </a>
                 </li>
                 <li>
-                  <a>Settings</a>
+                  <a>Configurar</a>
                 </li>
-                <li>
-                  <a>Logout</a>
+                <li onClick={closeLogin}>
+                  <a>Cerrar Sesion</a>
                 </li>
               </ul>
             </div>
+              } 
+
+
           </div>
         </div>
       </header>

@@ -3,7 +3,8 @@ import Footer from "../../components/Footer"
 import Header from "../../components/Header"
 import { Bounce, toast } from "react-toastify";
 import axios from "axios";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import useStore from "../../useStore";
 
 
 const API_LOGIN_JWT = "https://api.dojofullstack.com/api/auth/jwt/create/";
@@ -17,6 +18,9 @@ const FormLogin = () => {
     const [loading, setLoading] = useState();
 
     const navigate = useNavigate();
+
+
+    const updateStateLogin = useStore((state) => state.updateStateLogin);
 
 
     const loginUser = () => {
@@ -37,6 +41,8 @@ const FormLogin = () => {
             localStorage.setItem("refresh", refresh);
 
             setLoading(false);
+
+            updateStateLogin(true);
 
             toast.success('Sesion iniciado con exito!', {
                 position: "bottom-right",
@@ -133,6 +139,18 @@ const FormLogin = () => {
 
 
 const Login = () => {
+
+    const isLogin = useStore(state => state.isLogin)
+    const navigate = useNavigate();
+
+
+    useEffect(() => {
+        if (isLogin){
+            navigate("/");
+        }
+    }, [isLogin])
+
+
     return (
         <>
             <Header/>
