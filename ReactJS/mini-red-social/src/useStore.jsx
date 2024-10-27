@@ -24,6 +24,9 @@ const getRefreshToken = () => {
         axios.post(API, { "refresh":  refresh}).then((res) => {
             localStorage.setItem("access", res.data.access);
             localStorage.setItem("refresh", res.data.refresh);
+        }).catch((error) => {
+            localStorage.removeItem("access");
+            localStorage.removeItem("refresh");
         })
     }
 

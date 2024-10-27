@@ -78,17 +78,15 @@ const CreatePost = ({ getListPost }) => {
 };
 
 
-const ListPost = ({nexPage, getListPost, loadingPost, setLoadingPost }) => {
+const ListPost = ({nexPage, getListPost, loadingPost, setLoadingPost, setNexPage }) => {
 
   const post = useStore((state) => state.post);
-
-
 
 
   const [publicacionEdit, setPublicacionEdit] = useState("");
   const [publicacionIdEdit, setPublicacionIdEdit] = useState(null);
 
-  const [hasMore, sethasMore] = useState(true);
+  // const [hasMore, sethasMore] = useState(true);
 
 
   const addPost = useStore((state) => state.addPost);
@@ -158,6 +156,7 @@ const ListPost = ({nexPage, getListPost, loadingPost, setLoadingPost }) => {
     axios.get(nexPage).then((response) => {
       console.log("mas data",response.data.results);
       addPost(response.data.results);
+      setNexPage(response.data.next);
       setLoadingPost(false);
     });
   };
@@ -170,16 +169,12 @@ const ListPost = ({nexPage, getListPost, loadingPost, setLoadingPost }) => {
     <InfiniteScroll
     dataLength={post?.length || 0} // Número de elementos que actualmente tienes
     next={fetchMoreData} // Función que desencadena la carga de más datos
-    hasMore={hasMore} // Indica si hay más datos para cargar
-    loader={<h4>Cargando...</h4>} // Indicador de carga
-    endMessage={
-      <p style={{ textAlign: "center" }}>
-        <b>¡Eso es todo!</b>
-      </p>
-    }
+    hasMore={Boolean(nexPage)} // Indica si hay más datos para cargar
+    loader={<span className="loading loading-ball loading-lg"></span>} // Indicador de carga
+    endMessage={<></>}
   >
   
- <div className={`${loadingPost ? "skeleton": ""}`}>
+    <div className={`${loadingPost ? "skeleton": ""}`}>
       {post?.map((item, index) => (
         <div
           className={"card bg-info text-dark w-full my-2 flex-row items-center p-3 " + `${loadingPost ? "skeleton": ""}`}
@@ -264,7 +259,7 @@ const Post = () => {
 
   const getListPost = () => {
     setLoadingPost(true);
-    axios.get(`${API_POST}/api-demo/v1/publication/?page_size=3`).then((response) => {
+    axios.get(`${API_POST}/api-demo/v1/publication/?page_size=5`).then((response) => {
       // console.log(response.data.results);
       // setPost(response.data.results);
       updatePost(response.data.results);
@@ -280,7 +275,7 @@ const Post = () => {
       <div className="flex flex-col w-full">
         <CreatePost getListPost={getListPost} loadingPost={loadingPost}  />
 
-        <ListPost nexPage={nexPage} post={post} loadingPost={loadingPost}  setLoadingPost={setLoadingPost}  getListPost={getListPost} />
+        <ListPost setNexPage={setNexPage}  nexPage={nexPage} post={post} loadingPost={loadingPost}  setLoadingPost={setLoadingPost}  getListPost={getListPost} />
       </div>
     </>
   );

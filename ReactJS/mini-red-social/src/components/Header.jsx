@@ -54,8 +54,8 @@ const Header = () => {
 
   useEffect(() => {
 
-    if (!isLogin){
-      navigate("/login")
+    if (isLogin){
+      navigate("/");
     }
 
   }, [isLogin])
